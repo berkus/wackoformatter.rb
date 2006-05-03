@@ -1,16 +1,29 @@
 $LOAD_PATH.unshift("../lib/")
-require 'spec'
+require 'rubygems'
+require_gem 'rspec'
+require 'yaml'
+require 'ostruct'
 require 'wackoformatter'
 
-tests = YAML::load("expect.yml")
-
-context "Initial test" do 
+def load_tests
+  tests = YAML::load_file("expect.yml")
+  testlist = []
+  tests.each do |test|
+    testlist << OpenStruct.new(test)
+  end
+  testlist
 end
 
-context "Transformations" do
-    tests.each do |test|
-	specify test.text do
-	    test.source.to_html.should.equal test.expect
-	end
+tests = load_tests
+
+context "Test suite" do
+  setup do
+    @wf = WackoFormatter.new
+  end
+
+  tests.each do |test|
+    specify test.title do
+      @wf.to_html(test.input).should.equal test.output
     end
+  end
 end

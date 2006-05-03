@@ -1,7 +1,33 @@
-A test name:
-  source: **Source markup**
-  expect: <strong>Expected output</strong>
-
-Another test:
-  source: and so on
-  expect: and so on
+---
+-
+  title: First level header
+  input: "==Header=="
+  output: "<h1>Header</h1>"
+-
+  title: Second level header
+  input: "===Header==="
+  output: "<h2>Header</h2>"
+-
+  title: Third level header
+  input: "====Header===="
+  output: "<h3>Header</h3>"
+-
+  title: Fourth level header
+  input: "=====Header====="
+  output: "<h4>Header</h4>"
+-
+  title: Fifth level header
+  input: "======Header======"
+  output: "<h5>Header</h5>"
+-
+  title: Sixth level header
+  input: "=======Header======="
+  output: "<h6>Header</h6>"
+-
+  title: Number of equal signs at the end doesn't have to match start
+  input: "======Header=="
+  output: "<h5>Header</h5>"
+-
+  title: But the minimum is two
+  input: "======Header="
+  output: "======Header="
