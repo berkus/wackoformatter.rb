@@ -1,4 +1,6 @@
+$LOAD_PATH.unshift("../lib/")
 require 'spec'
+require 'wackoformatter'
 
 tests = YAML::load("expect.yml")
 
