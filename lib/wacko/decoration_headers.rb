@@ -15,10 +15,8 @@ class DecorationHeaders < Token
 
   def self.detect( outer_text )
     matches = @@re.match(outer_text)
-    if matches
-      return OpenStruct.new({:inner => matches[2], :level => matches[1].length-1, :text => outer_text})
-    end
-    false
+    return false unless matches
+    return OpenStruct.new({:inner => matches[2], :level => matches[1].length-1, :text => outer_text})
   end
 
   def compile

@@ -21,12 +21,6 @@ class Token
     build( detect( outer_text ) )
   end
 
-  # this hack is used in some sophisticated tokens
-  # to get rid of unnecessary newlines (see build below)
-  def separate_trim_next_newline
-    false
-  end
-
   def build( data_struct, previous_token )
     return if data_struct == false
 
@@ -88,6 +82,12 @@ class Token
   # returns separation from a given "next"
   def separate_from_next( nxt )
     ""
+  end
+
+  # this hack is used in some sophisticated tokens
+  # to get rid of unnecessary newlines (see build above)
+  def separate_trim_next_newline
+    false
   end
 
   # pretty clear: returns HTML appearance of this token (and its children)
