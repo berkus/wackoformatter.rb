@@ -4,6 +4,7 @@ require 'ostruct'
 require 'wacko/token'
 require 'wacko/empty'
 require 'wacko/decoration_headers'
+require 'wacko/ignore'
 
 # instantiating an object down the tree with const_get
 # <bitsweat> str.split('::').inject(Object) { |o, sub| o.const_get(sub) }.new
