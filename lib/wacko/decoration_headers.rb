@@ -13,7 +13,7 @@ class DecorationHeaders < Token
     "((^|\n)[\r\t ]*={2,6}(.)*?==+)"
   end
 
-  def detect( outer_text )
+  def self.detect( outer_text )
     matches = @@re.match(outer_text)
     if matches
       return OpenStruct.new({:inner => matches[2], :level => matches[1].length-1, :text => outer_text})
@@ -22,7 +22,7 @@ class DecorationHeaders < Token
   end
 
   def compile
-    inner = format(@data.inner, "default")
+    inner = @wf.to_html(@data.inner, :default)
     @html = "<h#{@data.level}>#{inner}</h#{@data.level}>"
   end
 

@@ -4,7 +4,12 @@ class Token
     ""
   end
 
-  def detect( outer_text )
+  # bind token to instance of WackoFormatter
+  def bind( inst )
+    @wf = inst
+  end
+
+  def self.detect( outer_text )
     false
   end
 
@@ -14,6 +19,12 @@ class Token
 
   def parse( outer_text )
     build( detect( outer_text ) )
+  end
+
+  # this hack is used in some sophisticated tokens
+  # to get rid of unnecessary newlines (see build below)
+  def separate_trim_next_newline
+    false
   end
 
   def build( data_struct, previous_token )
@@ -27,7 +38,7 @@ class Token
 
     # this hack is used in some sophisticated tokens
     # to get rid of unnecessary newlines
-    if (previous_token && previous_token.hack_separateTrimNextNewline && @data.respond_to?("gsub!".to_sym))
+    if (previous_token && previous_token.separate_trim_next_newline && @data.respond_to?("gsub!".to_sym))
       @data.gsub!( /^\n/, "" )
     end
 

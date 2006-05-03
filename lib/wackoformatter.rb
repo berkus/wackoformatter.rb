@@ -1,5 +1,6 @@
 DEBUG = true
 
+require 'ostruct'
 require 'wacko/token'
 require 'wacko/empty'
 require 'wacko/decoration_headers'
@@ -87,6 +88,46 @@ class WackoFormatter
   def build_tree( what, preset )
     what.gsub!(/\r/, '')
     preset = :default unless @@presets[preset]
+
+    # 1. get all matches.
+    matches = all_matches(@@presets[preset][:re], what)
+
+    # 2. step by step check`n`build
+    tree = []
+    token = false
+    token_list = []
+
+    matches.each do |match|
+      unless match.fake
+        if match.plain
+          token = Object.const_get(@@presets[preset][:empty]).new
+          token.bind self
+          token.set_next_preset @@presets[preset][:next]
+          token_list = token.build(match.match, tree.last)
+          token_list.each do |tok|
+            tree << tok
+          end
+        else
+          @@presets[preset][:list].each do |item|
+            p item if DEBUG
+            struct = Object.const_get(item).detect(match.match)
+            p struct if DEBUG
+            if struct
+              token = Object.const_get(item).new
+              token.bind self
+              token.set_next_preset @@presets[preset][:next]
+              token_list = token.build(struct, tree.last)
+              token_list.each do |tok|
+                tree << tok
+              end
+              break
+            end
+          end
+        end
+      end
+    end
+
+    tree.dup
   end
 
   def format_tree( tree )
@@ -99,4 +140,64 @@ class WackoFormatter
     result += last.separate_from_next( false ) if last
     result
   end
+
+  private
+
+  # returns all matches of "re" in a given "what".
+  @@allMatchesSpecialChar = "\xA3"  # used to avoid treating end-of-match as start-of-text for next match
+
+  def all_matches( re, what )
+    matches = []
+    m = true
+
+    matches << OpenStruct.new({
+      :match => "!fake!",
+      :start => 0,
+      :end   => 0,
+      :fake  => true
+    })
+
+    while m
+      if matches.size == 1
+        m = what.match(re)
+      else
+        m = (@@allMatchesSpecialChar + what).match(re)
+      end
+
+      if m
+        if m.begin(0) > 0
+          matches << OpenStruct.new({
+            :match => what[0, m.begin(0)],
+            :start => matches.last.end,
+            :end   => matches.last.end + m.begin(0),
+            :plain => true
+          })
+        end
+
+        matches << OpenStruct.new({
+          :match => m[0],
+          :start => matches.last.end,
+          :end   => matches.last.end + m.length
+        })
+
+        p what if DEBUG
+        p m.end(0) if DEBUG
+        what = what[m.end(0)..-1]
+        p what if DEBUG
+
+      end
+    end
+
+    if what.length > 0
+      matches << OpenStruct.new({
+        :match => what,
+        :start => matches.last.end,
+        :end   => matches.last.end + what.length,
+        :plain => true
+      })
+    end
+
+    matches
+  end
+
 end
