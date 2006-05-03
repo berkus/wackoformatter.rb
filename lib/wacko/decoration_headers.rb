@@ -4,13 +4,13 @@
 #   ==H1 header==
 #   ===H2 header==
 #   ...
-#   ======H5 header==
+#   =======H6 header==
 #
 require 'ostruct'
 
 class DecorationHeaders < Token
   def self.get_regexp_part
-    "((^|\n)[\r\t ]*={2,6}(.)*?==+)"
+    "((^|\n)[\r\t ]*={2,7}([^=])+?==+)"
   end
 
   def self.detect( outer_text )
@@ -26,7 +26,7 @@ class DecorationHeaders < Token
 
   private
 
-  #              1          2
-  @@re = /^\s*(={2,6})\s*(.*?)\s*==+$/
+  #           1          2
+  @@re = /^\s*(={2,7})\s*(.+?)\s*==+$/
 
 end
