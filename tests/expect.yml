@@ -1,0 +1,7 @@
+A test name:
+  source: **Source markup**
+  expect: <strong>Expected output</strong>
+
+Another test:
+  source: and so on
+  expect: and so on
