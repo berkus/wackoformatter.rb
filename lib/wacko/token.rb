@@ -71,7 +71,7 @@ class Token
   # private: compile from struct to html
   def compile
     if @next_preset
-      @html = format @data, @next_preset
+      @html = @wf.to_html(@data, @next_preset)
     else
       @html = @data
     end

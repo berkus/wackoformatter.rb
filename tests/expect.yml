@@ -31,3 +31,83 @@
   title: But the minimum is two
   input: "======Header="
   output: "======Header="
+-
+  title: A sequence of =s is not a header
+  input: "======="
+  output: "======="
+-
+  title: Ignore markup one
+  input: '""**Any** //markup// in this block ##is ignored##""'
+  output: '**Any** //markup// in this block ##is ignored##'
+-
+  title: Ignore markup two
+  input: "<waka31ignore>**Any** //markup// in this block ##is ignored##</waka31ignore>"
+  output: "**Any** //markup// in this block ##is ignored##"
+-
+  title: Ignore markup three
+  input: "~ThisIsNotAWikiWord"
+  output: "ThisIsNotAWikiWord"
+-
+  title: Bold
+  input: "**bold**"
+  output: "<b>bold</b>"
+-
+  title: Italic
+  input: "//italic//"
+  output: "<i>italic</i>"
+-
+  title: Monospace
+  input: "##monospace##"
+  output: "<tt>monospace</tt>"
+-
+  title: Underline
+  input: "__underline__"
+  output: "<u>underline</u>"
+-
+  title: Small
+  input: "++small++"
+  output: "<small>small</small>"
+-
+  title: Blockquote
+  input: "<[ blockquotes ]>"
+  output: "<blockquote>blockquotes</blockquote>"
+-
+  title: Not Blockquote
+  input: "<[blockquotes]>"
+  output: "<[blockquotes]>"
+-
+  title: Subscript
+  input: "vvSUBSCRIPTvv"
+  output: "<sub>SUBSCRIPT</sub>"
+-
+  title: Superscript
+  input: "^^superscript^^"
+  output: "<sup>superscript</sup>"
+-
+  title: Long dash
+  input: "this -- text"
+  output: "this &mdash; text"
+-
+  title: Not a long dash
+  input: "this--text"
+  output: "this--text"
+-
+  title: Newline
+  input: "this\ntext"
+  output: "this<br />text"
+-
+  title: Forced Newline
+  input: "this---text"
+  output: "this<br />text"
+-
+  title: Horizontal delimiter
+  input: "this----text"
+  output: 'this<hr noshade="noshade" size="1">text'
+-
+  title: Longer horizontal delimiter
+  input: "this-------text"
+  output: 'this<hr noshade="noshade" size="1">text'
+-
+  title: HTML less-than sign
+  input: "this<text"
+  output: "this&lt;text"

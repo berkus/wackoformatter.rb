@@ -1,10 +1,11 @@
-DEBUG = true
-
 require 'ostruct'
 require 'wacko/token'
 require 'wacko/empty'
+require 'wacko/decoration'
+require 'wacko/decoration_word'
 require 'wacko/decoration_headers'
 require 'wacko/ignore'
+require 'wacko/symbols'
 
 # instantiating an object down the tree with const_get
 # <bitsweat> str.split('::').inject(Object) { |o, sub| o.const_get(sub) }.new
@@ -20,7 +21,12 @@ class WackoFormatter
   @@defaultPreset = [ :skip_ignored, :default, :return_ignored ]
   @@presets = {
     :default => { # Main cycle
-      :list => [ "DecorationHeaders" ],
+      :list => [ "Decoration", "DecorationWord", "DecorationHeaders" ],
+      :empty => "Token",
+      :next => :symbols
+    },
+    :symbols => { # Very simple, but sometimes useful one
+      :list => [ "Symbols" ],
       :empty => "Token",
       :next => false
     },
@@ -48,7 +54,6 @@ class WackoFormatter
       end if preset[:list]
       @@presets[key][:re] = Regexp.new(regex.join("|")) unless regex.empty?
     end
-    p @@presets if DEBUG
   end
 
   # Convert markup to HTML, main entry point, USE THIS ONE.
@@ -65,11 +70,8 @@ class WackoFormatter
             ignored << m[1]
             what[@@ignoreRE] = @@ignoreChar
           end
-          p ignored if DEBUG
-          p what if DEBUG
         elsif preset == :return_ignored
-          what = what.split(@@ignoreChar).zip(ignored).to_s
-          p what if DEBUG
+          what = what.split(@@ignoreChar, -1).zip(ignored).to_s
         else
           what = to_html( what, preset )
         end
@@ -77,11 +79,11 @@ class WackoFormatter
 
       return what;
     else
-      return to_html( what, @@defaultPreset ) unless @@presets[presets]
+      return to_html(what, @@defaultPreset) unless @@presets[presets]
     end
 
-    tree = build_tree( what, presets )
-    return format_tree( tree )
+    tree = build_tree(what, presets)
+    return format_tree(tree)
   end
 
   # Build tree of tokens for further compilation.
@@ -110,9 +112,7 @@ class WackoFormatter
           end
         else
           @@presets[preset][:list].each do |item|
-            p item if DEBUG
             struct = Object.const_get(item).detect(match.match)
-            p struct if DEBUG
             if struct
               token = Object.const_get(item).new
               token.bind self
@@ -181,10 +181,7 @@ class WackoFormatter
           :end   => matches.last.end + m.length
         })
 
-        p what if DEBUG
-        p m.end(0) if DEBUG
         what = what[m.end(0)..-1]
-        p what if DEBUG
 
       end
     end
