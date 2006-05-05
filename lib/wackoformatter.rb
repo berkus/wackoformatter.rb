@@ -3,6 +3,7 @@ require 'wacko/token'
 require 'wacko/empty'
 require 'wacko/decoration'
 require 'wacko/decoration_word'
+require 'wacko/decoration_glue'
 require 'wacko/decoration_headers'
 require 'wacko/ignore'
 require 'wacko/symbols'
@@ -14,37 +15,6 @@ require 'wacko/symbols'
 
 
 class WackoFormatter
-
-  @@css_prefix = "wiki-"
-  @@css_suffix = ""
-
-  @@defaultPreset = [ :skip_ignored, :default, :return_ignored ]
-  @@presets = {
-    :default => { # Main cycle
-      :list => [ "Decoration", "DecorationWord", "DecorationHeaders" ],
-      :empty => "Token",
-      :next => :symbols
-    },
-    :symbols => { # Very simple, but sometimes useful one
-      :list => [ "Symbols" ],
-      :empty => "Token",
-      :next => false
-    },
-    :skip_ignored => {
-      :is_system => true
-    },
-    :return_ignored => {
-      :is_system => true
-    }
-  }
-
-  # stuff for ignoring
-  @@ignoreTagName = "waka31ignore"
-  @@ignoreRE = /<#{@@ignoreTagName}>((.|\n)*?)<\/#{@@ignoreTagName}>/
-  @@ignoreChar = "\xA2"
-  # \xA3 is also used below.
-
-
   # prebuild regexp for all presets
   def initialize
     @@presets.each do |key, preset|
@@ -141,6 +111,70 @@ class WackoFormatter
     result += last.separate_from_next( false ) if last
     result
   end
+
+#  cattr_accessor :css_prefix
+  @@css_prefix = "wiki-"
+
+  def self.css_prefix
+    @@css_prefix
+  end
+
+  def css_prefix
+    @@css_prefix
+  end
+
+  def self.css_prefix=( prefix )
+    @@css_prefix = prefix
+  end
+
+  def css_prefix=( prefix )
+    @@css_prefix = prefix
+  end
+
+#  cattr_accessor :css_suffix
+  @@css_suffix = ""
+
+  def self.css_suffix
+    @@css_suffix
+  end
+
+  def css_suffix
+    @@css_suffix
+  end
+
+  def self.css_suffix=( suffix )
+    @@css_suffix = suffix
+  end
+
+  def css_suffix=( suffix )
+    @@css_suffix = suffix
+  end
+
+
+  @@defaultPreset = [ :skip_ignored, :default, :return_ignored ]
+  @@presets = {
+    :default => { # Main cycle
+      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders" ],
+      :empty => "Token",
+      :next => :symbols
+    },
+    :symbols => { # Very simple, but sometimes useful one
+      :list => [ "Symbols" ],
+      :empty => "Token",
+      :next => false
+    },
+    :skip_ignored => {
+      :is_system => true
+    },
+    :return_ignored => {
+      :is_system => true
+    }
+  }
+
+  # stuff for ignoring
+  @@ignoreTagName = "waka31ignore"
+  @@ignoreRE = /<#{@@ignoreTagName}>((.|\n)*?)<\/#{@@ignoreTagName}>/
+  @@ignoreChar = "\xA2"
 
   private
 
