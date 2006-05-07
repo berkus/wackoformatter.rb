@@ -5,6 +5,7 @@ require 'wacko/decoration'
 require 'wacko/decoration_word'
 require 'wacko/decoration_glue'
 require 'wacko/decoration_headers'
+require 'wacko/links'
 require 'wacko/ignore'
 require 'wacko/symbols'
 
@@ -81,6 +82,7 @@ class WackoFormatter
             tree << tok
           end
         else
+          no_match = true
           @@presets[preset][:list].each do |item|
             struct = Object.const_get(item).detect(match.match)
             if struct
@@ -91,14 +93,24 @@ class WackoFormatter
               token_list.each do |tok|
                 tree << tok
               end
+              no_match = false
               break
+            end
+          end
+          if no_match # same as plain, welcome copypaster!
+            token = Object.const_get(@@presets[preset][:empty]).new
+            token.bind self
+            token.set_next_preset @@presets[preset][:next]
+            token_list = token.build(match.match, tree.last)
+            token_list.each do |tok|
+              tree << tok
             end
           end
         end
       end
     end
 
-    tree.dup
+    tree
   end
 
   def format_tree( tree )
@@ -151,8 +163,13 @@ class WackoFormatter
   end
 
 
-  @@defaultPreset = [ :skip_ignored, :default, :return_ignored ]
+  @@defaultPreset = [ :links, :skip_ignored, :default, :return_ignored ]
   @@presets = {
+    :links => {
+      :list => [ "Links", "Ignore" ],
+      :empty => "Token",
+      :next => false
+    },
     :default => { # Main cycle
       :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders" ],
       :empty => "Token",
@@ -175,6 +192,10 @@ class WackoFormatter
   @@ignoreTagName = "waka31ignore"
   @@ignoreRE = /<#{@@ignoreTagName}>((.|\n)*?)<\/#{@@ignoreTagName}>/
   @@ignoreChar = "\xA2"
+
+  def ignoreTagName
+    @@ignoreTagName
+  end
 
   private
 
@@ -215,7 +236,10 @@ class WackoFormatter
           :end   => matches.last.end + m.length
         })
 
+        p what
+        p m.end(0)
         what = what[m.end(0)..-1]
+        p what
 
       end
     end
