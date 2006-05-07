@@ -3,10 +3,10 @@
 #   that glues to words:
 #
 #   --strike out--
-#   !!background highlighting!!
-#   ??color hightlighting??
+#   !!color highlighting!!
+#   ??background hightlighting??
 #
-#   !!(red)background!!
+#   ??(red)background??
 #
 #   -- must not work in such cases (see leading space?)--
 #
@@ -72,7 +72,7 @@ class DecorationGlue < Token
   #         1    23      45         67
   @@re1 = /^(\s?)((-){2})((.|\n)*)\2((\s|[,.!\\?])?)$/
 
-  #         1    23         4  5                   67         89
-  @@re2 = /^(\s?)((\?|!){2})(\((red|blue|green)\))?((.|\n)*)\2((\s|[,.!\\?])?)$/
+  #         1    23         4  5                      67         89
+  @@re2 = /^(\s?)((\?|!){2})(\((red|blue|green)\)\s*)?((.|\n)*)\2((\s|[,.!\\?])?)$/
 
 end
