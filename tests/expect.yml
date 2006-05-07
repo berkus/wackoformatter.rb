@@ -40,6 +40,46 @@
   input: "========"
   output: "========"
 -
+  title: Links with protocol
+  input: 'http://yandex.ru'
+  output: '<a target="_blank" href="http://yandex.ru">http://yandex.ru</a>'
+-
+  title: Links with protocol and title text in round brackets
+  input: '((http://yandex.ru Yandex))'
+  output: '<a target="_blank" href="http://yandex.ru">Yandex</a>'
+-
+  title: Links with protocol and title text in square brackets
+  input: '[[http://yandex.ru Yandex]]'
+  output: '<a target="_blank" href="http://yandex.ru">Yandex</a>'
+-
+  title: Links without protocol
+  input: 'www.yandex.ru'
+  output: '<a target="_blank" href="http://www.yandex.ru">www.yandex.ru</a>'
+-
+  title: Mail links with protocol
+  input: 'mailto:mendokusee@gmail.com'
+  output: '<a target="_blank" href="mailto:mendokusee@gmail.com">mailto:mendokusee@gmail.com</a>'
+-
+  title: Mail links without protocol
+  input: 'mendokusee@gmail.com'
+  output: '<a target="_blank" href="mailto:mendokusee@gmail.com">mendokusee@gmail.com</a>'
+-
+  title: Predefined (interwiki) links
+  input: 'google:waka'
+  output: '<a target="_blank" href="http://www.google.com/search?q=waka">google:waka</a>'
+-
+  title: Predefined (interwiki) links with title text
+  input: '((google:waka poetry == What is waka))'
+  output: '<a target="_blank" href="http://www.google.com/search?q=waka%20poetry">What is waka</a>'
+-
+  title: Definitions
+  input: '(?dfn DFN means definition?)'
+  output: '<dfn title="DFN means definition">dfn</dfn>'
+-
+  title: Url with spaces and text with == signs
+  input: '((http://ya.ru with spaces == text with == signs))'
+  output: '<a target="_blank" href="http://ya.ru with spaces">text with == signs</a>'
+-
   title: Ignore markup one
   input: '""**Any** //markup// in this block ##is ignored##""'
   output: '**Any** //markup// in this block ##is ignored##'
