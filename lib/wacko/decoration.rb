@@ -11,6 +11,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class Decoration < Token
   def self.get_regexp_part
     "(\\*\\*(.)*?\\*\\*)"+
@@ -78,5 +80,7 @@ class Decoration < Token
   @@re2 = /^(>>(.*)<<)$/;
   #         1      23
   @@re3 = /^(<\[\s*((.|\n)*?)\s*\]>)$/;
+
+end
 
 end

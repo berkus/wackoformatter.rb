@@ -8,6 +8,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class DecorationHeaders < Token
   def self.get_regexp_part
     "((^|\n)[\r\t ]*={2,7}.*?==+)"
@@ -29,5 +31,7 @@ class DecorationHeaders < Token
 
   #           1          2
   @@re = /^\s*(={2,7})\s*(.+?)\s*==+$/
+
+end
 
 end

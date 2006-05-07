@@ -1,3 +1,4 @@
+module WookieFormat
 
 class Token
   def self.get_regexp_part
@@ -105,5 +106,7 @@ class Token
     return @data.text if @data.responds_to?(:text)
     return @data
   end
+
+end
 
 end

@@ -16,6 +16,8 @@
 require 'ostruct'
 require 'uri/common'
 
+module WookieFormat
+
 class Links < Token
   @@open_in_new_window = true
   @@interwiki = {
@@ -121,5 +123,7 @@ class Links < Token
   @@re_custom = /^(\({2}|(\(\?)|\[{2})(.*?)(\){2}|(\?\))|\]{2})$/i
 
   @@re = /^(#{self.get_regexp_part})$/
+
+end
 
 end

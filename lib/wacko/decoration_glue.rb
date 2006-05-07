@@ -12,6 +12,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class DecorationGlue < Token
   def self.get_regexp_part
     "((^|\\s)--[^ \t\n\r\\-]((.|\n)*?[^ \t\n\r\\-])?--($|\\s|[,.!\\?]))"+
@@ -74,5 +76,7 @@ class DecorationGlue < Token
 
   #         1    23         4  5                      67         89
   @@re2 = /^(\s?)((\?|!){2})(\((red|blue|green)\)\s*)?((.|\n)*)\2((\s|[,.!\\?])?)$/
+
+end
 
 end

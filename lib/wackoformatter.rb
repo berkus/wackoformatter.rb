@@ -9,11 +9,6 @@ require 'wacko/links'
 require 'wacko/ignore'
 require 'wacko/symbols'
 
-# instantiating an object down the tree with const_get
-# <bitsweat> str.split('::').inject(Object) { |o, sub| o.const_get(sub) }.new
-# my version would be (with hierarchy)
-# ["WackoFormatterNS", classname].inject(Object) { |o, sub| o.const_get(sub) }.new
-
 
 class WackoFormatter
   # prebuild regexp for all presets
@@ -21,7 +16,7 @@ class WackoFormatter
     @@presets.each do |key, preset|
       regex = []
       preset[:list].each do |klass|
-        regex << Object.const_get(klass).get_regexp_part
+        regex << get_class(klass).get_regexp_part
       end if preset[:list]
       @@presets[key][:re] = Regexp.new(regex.join("|")) unless regex.empty?
     end
@@ -74,7 +69,7 @@ class WackoFormatter
     matches.each do |match|
       unless match.fake
         if match.plain
-          token = Object.const_get(@@presets[preset][:empty]).new
+          token = get_class(@@presets[preset][:empty]).new
           token.bind self
           token.set_next_preset @@presets[preset][:next]
           token_list = token.build(match.match, tree.last)
@@ -84,9 +79,9 @@ class WackoFormatter
         else
           no_match = true
           @@presets[preset][:list].each do |item|
-            struct = Object.const_get(item).detect(match.match)
+            struct = get_class(item).detect(match.match)
             if struct
-              token = Object.const_get(item).new
+              token = get_class(item).new
               token.bind self
               token.set_next_preset @@presets[preset][:next]
               token_list = token.build(struct, tree.last)
@@ -98,7 +93,7 @@ class WackoFormatter
             end
           end
           if no_match # same as plain, welcome copypaster!
-            token = Object.const_get(@@presets[preset][:empty]).new
+            token = get_class(@@presets[preset][:empty]).new
             token.bind self
             token.set_next_preset @@presets[preset][:next]
             token_list = token.build(match.match, tree.last)
@@ -256,4 +251,9 @@ class WackoFormatter
     matches
   end
 
+  private
+
+  def get_class(name)
+    ["WookieFormat", name].inject(Object) { |o, sub| o.const_get(sub) }
+  end
 end

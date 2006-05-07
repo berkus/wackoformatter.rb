@@ -7,6 +7,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class Ignore < Token
   def self.get_regexp_part
     "(\"\"((.|\n)*?)\"\")"+
@@ -35,5 +37,7 @@ class Ignore < Token
   private
 
   @@re = /^(#{self.get_regexp_part})$/
+
+end
 
 end

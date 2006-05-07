@@ -9,6 +9,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class Symbols < Token
   def self.get_regexp_part
     "(-{2}-+)"+
@@ -56,5 +58,7 @@ class Symbols < Token
 
   #            1
   @@re = /^-{3}(-*)$/
+
+end
 
 end

@@ -6,6 +6,8 @@
 #
 require 'ostruct'
 
+module WookieFormat
+
 class DecorationWord < Token
   def self.get_regexp_part
     "(\\^\\^(\\S+)\\^\\^)"+
@@ -38,5 +40,7 @@ class DecorationWord < Token
   @@re = /^((\^|v){2})(.*)\1$/
 
   @@tagMap = { "v" => "sub", "^" => "sup" }
+
+end
 
 end
