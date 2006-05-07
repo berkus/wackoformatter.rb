@@ -106,8 +106,4 @@ class Token
     return @data
   end
 
-  def trim( data )
-    data.gsub(/^\s+/, "").gsub(/\s+$/, "") # FIXME: just use String.trim ?
-  end
-
 end
