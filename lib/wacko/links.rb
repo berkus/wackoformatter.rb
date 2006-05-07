@@ -44,8 +44,8 @@ class Links < Token
     _m = @@re.match(outer_text)
     return false unless _m
 
-    url = outer_text.strip
-    text = outer_text.strip
+    url = outer_text.dup
+    text = outer_text.dup
     is_abbr = false
 
     matches = @@re_custom.match(outer_text)
@@ -58,12 +58,11 @@ class Links < Token
         contents = matches[3].split("==")
       end
       url = contents[0].strip
-      contents[0] = ""
-      p contents
+      contents[0] = nil
       if matches[3].index("==") == nil
-        text = contents.collect{|c| c.strip}.join(" ").strip
+        text = contents.join(" ").strip
       else
-        text = contents.collect{|c| c.strip}.join("==").strip[2..-1]
+        text = contents.join("==")[2..-1].strip
       end
       p text
     end
