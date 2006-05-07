@@ -10,12 +10,13 @@ require 'ostruct'
 
 class DecorationHeaders < Token
   def self.get_regexp_part
-    "((^|\n)[\r\t ]*={2,7}([^=])+?==+)"
+    "((^|\n)[\r\t ]*={2,7}.*?==+)"
   end
 
   def self.detect( outer_text )
     matches = @@re.match(outer_text)
     return false unless matches
+    return false if matches[2] == '=' # Empty header
     return OpenStruct.new({:inner => matches[2], :level => matches[1].length-1, :text => outer_text})
   end
 
