@@ -32,9 +32,13 @@
   input: "======Header="
   output: "======Header="
 -
-  title: A sequence of =s is not a header
+  title: A sequence of =s is not a header - odd number of =s
   input: "======="
   output: "======="
+-
+  title: A sequence of =s is not a header - even number of =s
+  input: "========"
+  output: "========"
 -
   title: Ignore markup one
   input: '""**Any** //markup// in this block ##is ignored##""'
@@ -72,9 +76,9 @@
   input: "<[ blockquotes ]>"
   output: "<blockquote>blockquotes</blockquote>"
 -
-  title: Not Blockquote
+  title: Also Blockquote
   input: "<[blockquotes]>"
-  output: "<[blockquotes]>"
+  output: "<blockquote>blockquotes</blockquote>"
 -
   title: Subscript
   input: "vvSUBSCRIPTvv"
@@ -121,29 +125,33 @@
   output: "<s>text with <b>markup</b></s>"
 -
   title: Background highlighting
-  input: "!!background highlighting!!"
+  input: "??background highlighting??"
   output: '<span class="wiki-back">background highlighting</span>'
 -
   title: Background highlighting with markup inside
-  input: "!!background highlighting **with** //markup//!!"
+  input: "??background highlighting **with** //markup//??"
   output: '<span class="wiki-back">background highlighting <b>with</b> <i>markup</i></span>'
 -
   title: Red background highlighting
-  input: "!!(red) background highlighting!!"
+  input: "??(red) background highlighting??"
   output: '<span class="wiki-back-red">background highlighting</span>'
 -
   title: Color highlighting
-  input: "??color highlighting??"
+  input: "!!color highlighting!!"
   output: '<span class="wiki-fore">color highlighting</span>'
 -
   title: Color highlighting with markup
-  input: "??color __highlighting__ ^^here^^??"
+  input: "!!color __highlighting__ ^^here^^!!"
   output: '<span class="wiki-fore">color <u>highlighting</u> <sup>here</sup></span>'
 -
   title: Not strikeout
   input: "-- not strikeout--"
   output: "-- not strikeout--"
 -
-  title: Still a background highlighting
-  input: "!! background!!"
-  output: '<span class="wiki-back">background</span>'
+  title: Not background highlighting
+  input: "?? background??"
+  output: "?? background??"
+-
+  title: Not color highlighting
+  input: "!! color!!"
+  output: "!! color!!"
