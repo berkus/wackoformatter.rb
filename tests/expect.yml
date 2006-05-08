@@ -202,8 +202,12 @@
 -
   title: Second level email quotation
   input: ">> Quote"
-  output: '<div class="wiki-email2">Quote</div>'
+  output: '<div class="wiki-email0">Quote</div>'
 -
   title: Third level email quotation
   input: ">>> Quote"
   output: '<div class="wiki-email1">Quote</div>'
+-
+  title: Longer email block
+  input: ">>> Quote\n>>> More text\n>> Some more\n\n> Text as well\n\nUnquoted"
+  output: '<div class="wiki-email1">Quote<br />More text</div><div class="wiki-email0">Some more</div><div class="wiki-email1">Text as well</div>Unquoted'
