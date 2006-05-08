@@ -8,6 +8,7 @@ require 'wacko/decoration_headers'
 require 'wacko/links'
 require 'wacko/ignore'
 require 'wacko/symbols'
+require 'wacko/email_quotes'
 
 
 class WackoFormatter
@@ -166,7 +167,7 @@ class WackoFormatter
       :next => false
     },
     :default => { # Main cycle
-      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders" ],
+      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders", "EmailQuotes" ],
       :empty => "Token",
       :next => :symbols
     },
@@ -250,8 +251,6 @@ class WackoFormatter
 
     matches
   end
-
-  private
 
   def get_class(name)
     ["WookieFormat", name].inject(Object) { |o, sub| o.const_get(sub) }

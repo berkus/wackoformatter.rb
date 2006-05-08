@@ -195,3 +195,15 @@
   title: Not color highlighting
   input: "!! color!!"
   output: "!! color!!"
+-
+  title: First level email quotation
+  input: "> Quote"
+  output: '<div class="wiki-email1">Quote</div>'
+-
+  title: Second level email quotation
+  input: ">> Quote"
+  output: '<div class="wiki-email2">Quote</div>'
+-
+  title: Third level email quotation
+  input: ">>> Quote"
+  output: '<div class="wiki-email1">Quote</div>'
