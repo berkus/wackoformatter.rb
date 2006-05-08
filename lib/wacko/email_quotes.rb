@@ -37,7 +37,7 @@ class EmailQuotes < Token
   end
 
   def glue
-    # glue only if prev is wakaEmailQuote with lesser depth
+    # glue only if prev is EmailQuote with lesser depth
     if @prev && @prev.is_a?(EmailQuotes) && @prev.data.level < @data.level
       return @prev.glue_child(self)
     end
@@ -56,13 +56,13 @@ class EmailQuotes < Token
 
   def compile
     inner = @wf.to_html(data.inner, :default)
-    glued = @wf.format_tree(@tree, :default)
+    glued = @wf.format_tree(@tree)
 
     list_start_if_any = ""
     if !@prev || !@prev.is_a?(EmailQuotes) || @prev.data.level != data.level || !@@html_quote_glue
       sign = ""
       sign = @@html_quote_sign * data.level if @@html_quote_sign != ""
-      _css = @wf.css_prefix + "email" + data.level % 2 + @wf.css_suffix
+      _css = @wf.css_prefix + "email" + (data.level % 2).to_s + @wf.css_suffix
       list_start_if_any += "<div class=\"#{_css}\">#{sign}"
     end
 
