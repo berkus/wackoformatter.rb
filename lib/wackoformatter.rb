@@ -217,11 +217,13 @@ class WackoFormatter
       end
 
       if m
-        if m.begin(0) > 0
+        pos = what.index(m[0])
+
+        if pos > 0
           matches << OpenStruct.new({
-            :match => what[0, m.begin(0)],
+            :match => what[0, pos],
             :start => matches.last.end,
-            :end   => matches.last.end + m.begin(0),
+            :end   => matches.last.end + pos,
             :plain => true
           })
         end
@@ -229,14 +231,10 @@ class WackoFormatter
         matches << OpenStruct.new({
           :match => m[0],
           :start => matches.last.end,
-          :end   => matches.last.end + m.length
+          :end   => matches.last.end + m[0].length
         })
 
-        p what
-        p m.end(0)
-        what = what[m.end(0)..-1]
-        p what
-
+        what = what[pos + m[0].length..-1]
       end
     end
 
