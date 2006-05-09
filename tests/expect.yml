@@ -210,4 +210,4 @@
 -
   title: Longer email block
   input: ">>> Quote\n>>> More text\n>> Some more\n\n> Text as well\n\nUnquoted"
-  output: '<div class="wiki-email1">Quote<br />More text</div><div class="wiki-email0">Some more</div><div class="wiki-email1">Text as well</div>Unquoted'
+  output: '<div class="wiki-email1">Quote More text</div><div class="wiki-email0">Some more</div><div class="wiki-email1">Text as well</div>Unquoted'

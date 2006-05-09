@@ -51,7 +51,7 @@ class EmailQuotes < Token
   # returns separation from a given "next"
   def separate_from_next( nxt )
     return "</div>" if !nxt || !nxt.is_a?(EmailQuotes) || nxt.data.level != data.level || !@@html_quote_glue
-    return ""
+    return " "
   end
 
   def compile
