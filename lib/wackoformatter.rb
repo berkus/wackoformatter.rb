@@ -9,6 +9,7 @@ require 'wacko/links'
 require 'wacko/ignore'
 require 'wacko/symbols'
 require 'wacko/email_quotes'
+require 'wacko/lists'
 
 
 class WackoFormatter
@@ -167,7 +168,7 @@ class WackoFormatter
       :next => false
     },
     :default => { # Main cycle
-      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders", "EmailQuotes" ],
+      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders", "Lists", "EmailQuotes" ],
       :empty => "Token",
       :next => :symbols
     },
