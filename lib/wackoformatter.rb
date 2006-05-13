@@ -77,7 +77,7 @@ class WackoFormatter
           token_list = token.build(match.match, tree.last)
           token_list.each do |tok|
             tree << tok
-          end
+          end if token_list
         else
           no_match = true
           @@presets[preset][:list].each do |item|
@@ -89,7 +89,7 @@ class WackoFormatter
               token_list = token.build(struct, tree.last)
               token_list.each do |tok|
                 tree << tok
-              end
+              end if token_list
               no_match = false
               break
             end
@@ -101,7 +101,7 @@ class WackoFormatter
             token_list = token.build(match.match, tree.last)
             token_list.each do |tok|
               tree << tok
-            end
+            end if token_list
           end
         end
       end
