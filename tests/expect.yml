@@ -211,3 +211,19 @@
   title: Longer email block
   input: ">>> Quote\n>>> More text\n>> Some more\n\n> Text as well\n\nUnquoted"
   output: '<div class="wiki-email1">Quote More text</div><div class="wiki-email0">Some more</div><div class="wiki-email1">Text as well</div>Unquoted'
+-
+  title: Simple two item list
+  input: "  * item one\n  * itemtwo"
+  output: '<ul><li>item one</li><li>itemtwo</li></ul>'
+-
+  title: Numbered two item list
+  input: "  1. item one\n  1. itemtwo"
+  output: '<ol><li>item one</li><li>itemtwo</li></ol>'
+-
+  title: Numbered two item list with start number
+  input: "  1.#9 item one\n  1. itemtwo"
+  output: '<ol start="9" ><li>item one</li><li>itemtwo</li></ol>'
+-
+  title: Simple list with nested numbered list with start number
+  input: "  * item one\n    1.#9 item nine\n    1. itemten\n  * item two"
+  output: '<ul><li>item one<ol start="9" ><li>item nine</li><li>itemten</li></ol></li><li>item two</li></ul>'
