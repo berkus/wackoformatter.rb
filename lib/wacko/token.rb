@@ -2,6 +2,8 @@ module WookieFormat
 
 class Token
   attr_accessor :data
+  attr_accessor :prev
+  attr_accessor :parent
 
   def self.get_regexp_part
     ""
