@@ -227,3 +227,7 @@
   title: Simple list with nested numbered list with start number
   input: "  * item one\n    1.#9 item nine\n    1. itemten\n  * item two"
   output: '<ul><li>item one<ol start="9" ><li>item nine</li><li>itemten</li></ol></li><li>item two</li></ul>'
+-
+  title: Simple user-style table
+  input: "#|\n|| cell1 | cell2 ||\n|| cell3 | cell4 ||\n|#"
+  output: "<table class=\"wiki-usertable\"><tr><td> cell1 </td><td> cell2 </td></tr><tr><td> cell3 </td><td> cell4 </td></tr></table>"

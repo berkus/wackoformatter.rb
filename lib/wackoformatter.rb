@@ -10,6 +10,7 @@ require 'wacko/ignore'
 require 'wacko/symbols'
 require 'wacko/email_quotes'
 require 'wacko/lists'
+require 'wacko/tables'
 
 
 class WackoFormatter
@@ -162,13 +163,18 @@ class WackoFormatter
 
   @@defaultPreset = [ :links, :skip_ignored, :default, :return_ignored ]
   @@presets = {
+    :table => { # Intrinsic (do not use at all)
+      :list => [ "TablesRow" ],
+      :empty => "Empty",
+      :next => :default
+    },
     :links => {
       :list => [ "Links", "Ignore" ],
       :empty => "Token",
       :next => false
     },
     :default => { # Main cycle
-      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders", "Lists", "EmailQuotes" ],
+      :list => [ "Decoration", "DecorationWord", "DecorationGlue", "DecorationHeaders", "Lists", "EmailQuotes", "Tables" ],
       :empty => "Token",
       :next => :symbols
     },
