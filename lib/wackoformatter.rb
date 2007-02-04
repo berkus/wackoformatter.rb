@@ -163,6 +163,11 @@ class WackoFormatter
 
   @@defaultPreset = [ :links, :skip_ignored, :default, :return_ignored ]
   @@presets = {
+#    :todo => { # Todo markup
+#      :list => [ "Todo" ],
+#      :empty => "TodoContent",
+#      :next => [ :links, :skip_ignored, :default, :return_ignored ] # same as default preset
+#    },
     :sections => { # Useful
       :list => [ "Sections" ],
       :empty => "SectionsContent",

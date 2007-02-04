@@ -66,7 +66,6 @@ class Links < Token
       else
         text = contents.join("==")[2..-1].strip
       end
-      p text
     end
 
     result = OpenStruct.new({

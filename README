@@ -1,9 +1,7 @@
-Done:
+TODO
+Write tests for:
 
-Todo:
-wakaSections
-wakaTables
-wakaTodo
-wakaFormatter
+  * Sections
+  * Todo
 
 copy waka.css to lib/www/css
