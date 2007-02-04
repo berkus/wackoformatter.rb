@@ -11,6 +11,7 @@ require 'wacko/symbols'
 require 'wacko/email_quotes'
 require 'wacko/lists'
 require 'wacko/tables'
+require 'wacko/sections'
 
 
 class WackoFormatter
@@ -160,9 +161,13 @@ class WackoFormatter
     @@css_suffix = suffix
   end
 
-
   @@defaultPreset = [ :links, :skip_ignored, :default, :return_ignored ]
   @@presets = {
+    :sections => { # Useful
+      :list => [ "Sections" ],
+      :empty => "SectionsContent",
+      :next => [ :links, :skip_ignored, :default, :return_ignored ] # same as default preset
+    },
     :table => { # Intrinsic (do not use at all)
       :list => [ "TablesRow" ],
       :empty => "Empty",
