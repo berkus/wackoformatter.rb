@@ -23,7 +23,7 @@ context "Test suite" do
 
   tests.each do |test|
     specify test.title do
-      @wf.to_html(test.input).should.equal test.output
+      @wf.to_html(test.input).should == test.output
     end
   end
 end
